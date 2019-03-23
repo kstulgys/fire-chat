@@ -1,27 +1,35 @@
-import "semantic-ui-css/semantic.min.css"
-import "./styles.css"
-import React, { useState } from "react"
-import ReactDOM from "react-dom"
-import { Grid, Header, Segment, Item, Button } from "semantic-ui-react"
-import Channel from "./Channel"
-import Nav from "./Nav"
-import { firebase } from "./firebase"
+import 'semantic-ui-css/semantic.min.css'
+import './styles.css'
+import React, { useState, useEffect } from 'react'
+import ReactDOM from 'react-dom'
+import { Grid, Header, Segment, Item, Button } from 'semantic-ui-react'
+import Channel from './Channel'
+import Nav from './Nav'
+import { firebase } from './firebase'
 
 function App() {
   const [user, setUser] = useState(null)
 
+  useEffect(() => {
+    return firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        setUser(user)
+      } else {
+        setUser(null)
+      }
+    })
+  })
+
   const handleSignIn = async () => {
     const provider = new firebase.auth.GoogleAuthProvider()
-    const result = await firebase.auth().signInWithPopup(provider)
-    console.log(result)
-    setUser(result.user)
+    await firebase.auth().signInWithPopup(provider)
   }
   return user ? (
     <Grid
       inverted
       divided
       className="m-0 p-5 p-sm-2"
-      style={{ height: "100vh" }}
+      style={{ height: '100vh' }}
     >
       <Grid.Row stretched>
         <Grid.Column width={4}>
@@ -34,7 +42,7 @@ function App() {
     </Grid>
   ) : (
     <div
-      style={{ height: "80vh" }}
+      style={{ height: '80vh' }}
       className="d-flex align-items-center justify-content-center"
     >
       <div>
@@ -52,5 +60,5 @@ function App() {
   )
 }
 
-const rootElement = document.getElementById("root")
+const rootElement = document.getElementById('root')
 ReactDOM.render(<App />, rootElement)
