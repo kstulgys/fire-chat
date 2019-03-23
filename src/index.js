@@ -53,7 +53,7 @@ function App() {
           <Header>Meet friends and stuff...</Header>
         </div>
         <div className="text-center my-3">
-          <Button onClick={handleSignIn}>Please Log In</Button>
+          <Button onClick={handleSignIn}>Log In</Button>
         </div>
       </div>
     </div>
