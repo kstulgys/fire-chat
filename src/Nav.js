@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Grid, Image, Segment, Item, List } from 'semantic-ui-react'
 import useCollection from './useCollection'
 import { firebase } from './firebase'
+import { Link } from '@reach/router'
 
 export default function Nav({ user }) {
   const channels = useCollection('channels')
@@ -20,10 +21,10 @@ export default function Nav({ user }) {
         </div>
       </div>
       <div className="mt-5 h-100">
-        {channels.map(({ topic, id }) => (
-          <a key={id} href={`/channel/${id}`}>
+        {channels.map(({ id }) => (
+          <Link key={id} to={`/channel/${id}`}>
             <h4 className="my-3">#{id}</h4>
-          </a>
+          </Link>
         ))}
       </div>
     </>

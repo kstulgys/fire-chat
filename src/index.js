@@ -6,6 +6,7 @@ import { Grid, Header, Segment, Item, Button } from 'semantic-ui-react'
 import Channel from './Channel'
 import Nav from './Nav'
 import { firebase, db } from './firebase'
+import { Router, Redirect } from '@reach/router'
 
 function App() {
   const user = useAuth()
@@ -17,8 +18,12 @@ function App() {
         <Grid.Column width={2}>
           <Nav user={user} />
         </Grid.Column>
+
         <Grid.Column width={10}>
-          <Channel user={user} />
+          <Router>
+            <Channel path="channel/:channelId" user={user} />
+            <Redirect from="/" to="channel/food" />
+          </Router>
         </Grid.Column>
         <Grid.Column width={2} />
       </Grid.Row>
@@ -76,14 +81,13 @@ function useAuth() {
   useEffect(() => {
     return firebase.auth().onAuthStateChanged(firebaseUser => {
       if (firebaseUser) {
-        const { displayName, photoURL, uid } = firebaseUser
         const user = {
-          displayName,
-          photoURL,
-          uid
+          displayName: firebaseUser.displayName,
+          photoURL: firebaseUser.photoURL,
+          uid: firebaseUser.uid
         }
-        setUser(user)
         db.doc(`users/${user.uid}`).set(user, { merge: true })
+        setUser(user)
       } else {
         setUser(null)
       }

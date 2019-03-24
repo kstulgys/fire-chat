@@ -5,16 +5,16 @@ import Messages from './Messages'
 import ChatInputBox from './ChatInputBox'
 import Members from './Members'
 
-export default function Channel({ user }) {
+export default function Channel({ user, channelId }) {
   return (
-    <Grid divided stretched>
-      <Grid.Row>
-        <Grid.Column width={11} className="d-flex flex-column">
+    <Grid divided stretched style={{ height: '93vh' }}>
+      <Grid.Row stretched>
+        <Grid.Column stretched width={13} className="d-flex flex-column">
           <ChannelInfo />
-          <Messages user={user} />
-          <ChatInputBox user={user} />
+          <Messages user={user} channelId={channelId} />
+          <ChatInputBox user={user} channelId={channelId} />
         </Grid.Column>
-        <Grid.Column width={5} className="">
+        <Grid.Column width={3} className="">
           <Members />
         </Grid.Column>
       </Grid.Row>

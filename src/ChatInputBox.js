@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Input } from 'semantic-ui-react'
 import { db } from './firebase'
 
-export default function ChatInputBox({ user }) {
+export default function ChatInputBox({ user, channelId }) {
   const [input, setInput] = useState('')
 
   const handleInputChange = e => {
@@ -11,7 +11,7 @@ export default function ChatInputBox({ user }) {
 
   const handleSubmit = e => {
     e.preventDefault()
-    db.collection('channels/food/messages').add({
+    db.collection(`channels/${channelId}/messages`).add({
       user: db.doc(`users/${user.uid}`),
       text: input,
       createdAt: new Date()
