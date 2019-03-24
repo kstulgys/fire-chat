@@ -7,7 +7,7 @@ export default function Nav({ user }) {
   const channels = useCollection('channels')
 
   return (
-    <div className="p-3 pt-lg-5 pl-lg-5">
+    <>
       <div className="d-flex align-items-center">
         <div>
           <Image avatar src={user.photoURL} size="mini" />
@@ -19,13 +19,13 @@ export default function Nav({ user }) {
           </a>
         </div>
       </div>
-      <div className="mt-5">
+      <div className="mt-5 h-100">
         {channels.map(({ topic, id }) => (
           <a key={id} href={`/channel/${id}`}>
             <h4 className="my-3">#{id}</h4>
           </a>
         ))}
       </div>
-    </div>
+    </>
   )
 }

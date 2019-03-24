@@ -11,14 +11,16 @@ function App() {
   const user = useAuth()
 
   return user ? (
-    <Grid divided className="m-0 p-5 p-sm-2" style={{ height: '100vh' }}>
+    <Grid divided className="m-0 p-5" style={{ height: '100vh' }}>
       <Grid.Row stretched>
-        <Grid.Column width={4}>
+        <Grid.Column width={2} />
+        <Grid.Column width={2}>
           <Nav user={user} />
         </Grid.Column>
-        <Grid.Column width={12}>
+        <Grid.Column width={10}>
           <Channel user={user} />
         </Grid.Column>
+        <Grid.Column width={2} />
       </Grid.Row>
     </Grid>
   ) : (
