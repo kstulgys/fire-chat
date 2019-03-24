@@ -1,9 +1,9 @@
-import React, { useState } from "react"
-import { Input } from "semantic-ui-react"
-import { db } from "./firebase"
+import React, { useState } from 'react'
+import { Input } from 'semantic-ui-react'
+import { db } from './firebase'
 
-export default function ChatInputBox() {
-  const [input, setInput] = useState("")
+export default function ChatInputBox({ user }) {
+  const [input, setInput] = useState('')
 
   const handleInputChange = e => {
     setInput(e.target.value)
@@ -11,7 +11,8 @@ export default function ChatInputBox() {
 
   const handleSubmit = e => {
     e.preventDefault()
-    db.collection("channels/food/messages").add({
+    db.collection('channels/food/messages').add({
+      user: db.doc(`users/${user.uid}`),
       text: input,
       createdAt: new Date()
     })

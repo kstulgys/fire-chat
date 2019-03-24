@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 import {
   Grid,
   Image,
@@ -9,18 +9,18 @@ import {
   Item,
   Label,
   Header
-} from "semantic-ui-react"
+} from 'semantic-ui-react'
 
 export default function Members() {
   return (
     <div className="h-100">
       <div className="d-flex align-items-center">
-        <Label circular size="mini" />
-        <p className="my-1 ml-2 text-white">Alice</p>
+        <Label style={{ fontSize: 5 }} circular />
+        <p className="my-1 ml-2">Alice</p>
       </div>
       <div className="d-flex align-items-center">
-        <Label circular color="teal" size="mini" />
-        <p className="my-1 ml-2 text-white">Karolis</p>
+        <Label style={{ fontSize: 5 }} circular color="teal" />
+        <p className="my-1 ml-2">Karolis</p>
       </div>
     </div>
   )
