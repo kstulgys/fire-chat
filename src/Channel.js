@@ -10,7 +10,7 @@ export default function Channel({ user, channelId }) {
     <Grid divided stretched style={{ height: '93vh' }}>
       <Grid.Row stretched>
         <Grid.Column stretched width={13} className="d-flex flex-column">
-          <ChannelInfo />
+          <ChannelInfo channelId={channelId} />
           <Messages user={user} channelId={channelId} />
           <ChatInputBox user={user} channelId={channelId} />
         </Grid.Column>

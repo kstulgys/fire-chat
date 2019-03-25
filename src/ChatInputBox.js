@@ -17,7 +17,7 @@ export default function ChatInputBox({ user, channelId }) {
       createdAt: new Date()
     })
     e.target.reset()
-    console.log(input)
+    // console.log(input)
   }
 
   return (

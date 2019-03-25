@@ -35,7 +35,6 @@ function FirstMessageFromUser({ message, showDay }) {
   const getTimeDistance = () => {
     return distanceInWords(message.createdAt.toDate(), new Date())
   }
-  console.log(getTimeDistance)
   return (
     <div key={message.id}>
       {showDay && (

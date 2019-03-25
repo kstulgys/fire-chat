@@ -4,22 +4,21 @@ import { db } from './firebase'
 
 const cashe = {}
 export default function useDocWithCashe(path) {
-  const [doc, setDoc] = useState(null)
+  const [doc, setDoc] = useState(cashe[path])
 
   useEffect(() => {
     if (cashe[path]) {
-      setDoc(cashe[path])
       return
     }
-    return db.doc(path).onSnapshot(doc => {
-      const user = {
-        id: doc.id,
-        ...doc.data()
+    return db.doc(path).onSnapshot(item => {
+      const res = {
+        id: item.id,
+        ...item.data()
       }
-      setDoc(user)
-      cashe[path] = user
+      cashe[path] = res
+      setDoc(res)
     })
-  }, [])
+  }, [path])
 
   return doc
 }

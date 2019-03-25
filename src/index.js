@@ -47,8 +47,7 @@ function LogIn() {
   return (
     <div
       style={{ height: '80vh' }}
-      className="d-flex align-items-center justify-content-center"
-    >
+      className="d-flex align-items-center justify-content-center">
       <div>
         <div className="text-center">
           <Header>Fire-Chat!</Header>
@@ -79,14 +78,19 @@ function useAuth() {
   const [user, setUser] = useState(null)
 
   useEffect(() => {
-    return firebase.auth().onAuthStateChanged(firebaseUser => {
+    return firebase.auth().onAuthStateChanged(async userFromFirebase => {
+      const firebaseUser = await userFromFirebase
       if (firebaseUser) {
         const user = {
           displayName: firebaseUser.displayName,
           photoURL: firebaseUser.photoURL,
           uid: firebaseUser.uid
         }
-        db.doc(`users/${user.uid}`).set(user, { merge: true })
+        // console.log('user after login', user)
+        await db
+          .collection('users')
+          .doc(user.uid)
+          .set(user, { merge: true })
         setUser(user)
       } else {
         setUser(null)
