@@ -1,14 +1,22 @@
-import React from 'react'
-import { Image, Divider, Header } from 'semantic-ui-react'
+import React, { useRef } from 'react'
 import useCollection from './useCollection'
 import useDocWithCashe from './useDocWithCashe'
 import distanceInWords from 'date-fns/distance_in_words'
 import isSameDay from 'date-fns/is_same_day'
+import { useEffect } from 'react'
+import { Alert, Button, Card, CardBody } from 'shards-react'
 
 export default function Messages({ channelId }) {
   const messages = useCollection(`channels/${channelId}/messages`, 'createdAt')
+  const scrollerRef = useRef()
+
+  useEffect(() => {
+    const node = scrollerRef.current
+    node.scrollTop = node.scrollHeight
+  })
+  // console.log(window.innerHeight)
   return (
-    <div className="h-100">
+    <div ref={scrollerRef} style={{ height: '70vh', overflowY: 'scroll' }}>
       {messages.map((message, idx) => {
         const prevMessage = messages[idx - 1]
         const showAvatar = shouldShowAvatar(prevMessage, message)
@@ -38,12 +46,17 @@ function FirstMessageFromUser({ message, showDay }) {
   return (
     <div key={message.id}>
       {showDay && (
-        <Divider className="pt-4" horizontal>
-          22/03/2018
-        </Divider>
+        <div className="mt-5">
+          <p className="text-center font-weight-bold p-0 my-2">22/03/2018</p>
+          <hr className="p-0 m-0" />
+        </div>
       )}
       <div className="d-flex align-items-center mt-4">
-        <Image avatar src={author && author.photoURL} />
+        <img
+          className="rounded-circle"
+          style={{ width: 35 }}
+          src={author && author.photoURL}
+        />
         <div className="ml-2">
           <p className="p-0 m-0 font-weight-bold">
             {author && author.displayName}

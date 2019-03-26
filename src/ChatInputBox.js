@@ -1,13 +1,10 @@
 import React, { useState } from 'react'
-import { Input } from 'semantic-ui-react'
+import { Form, FormGroup, FormInput, Card, CardBody } from 'shards-react'
+
 import { db } from './firebase'
 
 export default function ChatInputBox({ user, channelId }) {
   const [input, setInput] = useState('')
-
-  const handleInputChange = e => {
-    setInput(e.target.value)
-  }
 
   const handleSubmit = e => {
     e.preventDefault()
@@ -16,17 +13,23 @@ export default function ChatInputBox({ user, channelId }) {
       text: input,
       createdAt: new Date()
     })
-    e.target.reset()
-    // console.log(input)
+    setInput('')
   }
 
   return (
-    <form onSubmit={handleSubmit} className="">
-      <Input
-        fluid
-        placeholder="What's your thoughts..."
-        onChange={handleInputChange}
-      />
-    </form>
+    <Card
+      className="m-0 p-0"
+      style={{ position: 'absolute', bottom: 30, right: 0, width: '100%' }}>
+      <CardBody className="m-0 p-0">
+        <Form onSubmit={handleSubmit}>
+          <FormInput
+            size="lg"
+            value={input}
+            onChange={e => setInput(e.target.value)}
+            placeholder=""
+          />
+        </Form>
+      </CardBody>
+    </Card>
   )
 }

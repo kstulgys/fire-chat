@@ -1,8 +1,9 @@
-import 'semantic-ui-css/semantic.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'shards-ui/dist/css/shards.min.css'
 import './styles.css'
 import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
-import { Grid, Header, Segment, Item, Button } from 'semantic-ui-react'
+import { Alert, Button } from 'shards-react'
 import Channel from './Channel'
 import Nav from './Nav'
 import { firebase, db } from './firebase'
@@ -10,24 +11,23 @@ import { Router, Redirect } from '@reach/router'
 
 function App() {
   const user = useAuth()
-
+  // const user = true
   return user ? (
-    <Grid divided className="m-0 p-5" style={{ height: '100vh' }}>
-      <Grid.Row stretched>
-        <Grid.Column width={2} />
-        <Grid.Column width={2}>
+    <div
+      className="container bg-light"
+      style={{
+        height: '100vh'
+      }}>
+      <div className="row h-100">
+        <div className="col-3">
           <Nav user={user} />
-        </Grid.Column>
-
-        <Grid.Column width={10}>
-          <Router>
-            <Channel path="channel/:channelId" user={user} />
-            <Redirect from="/" to="channel/food" />
-          </Router>
-        </Grid.Column>
-        <Grid.Column width={2} />
-      </Grid.Row>
-    </Grid>
+        </div>
+        <Router className="col-9">
+          <Channel path="channel/:channelId" user={user} />
+          <Redirect from="/" to="channel/general" />
+        </Router>
+      </div>
+    </div>
   ) : (
     <LogIn />
   )
@@ -50,10 +50,10 @@ function LogIn() {
       className="d-flex align-items-center justify-content-center">
       <div>
         <div className="text-center">
-          <Header>Fire-Chat!</Header>
+          <h5>Fire-Chat!</h5>
         </div>
         <div className="text-center my-3">
-          <Header>Meet friends and stuff...</Header>
+          <h5>Meet friends and stuff...</h5>
         </div>
         <div className="text-center my-3">
           <Button onClick={handleSignIn}>Log In</Button>
@@ -62,10 +62,10 @@ function LogIn() {
         {authError && (
           <>
             <div className="text-center my-3">
-              <Header>Sorry there was a problem...</Header>
+              <h5>Sorry there was a problem...</h5>
             </div>
             <div className="text-center my-3">
-              <Header className="text-danger">{authError}</Header>
+              <h5 className="text-danger">{authError}</h5>
             </div>
           </>
         )}

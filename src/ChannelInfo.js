@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Icon } from 'semantic-ui-react'
 import useDoc from './useDoc'
 import { db } from './firebase'
+import { FaRegEdit, FaRegPaperPlane } from 'react-icons/fa'
+import { Alert, Button, Card, CardBody, FormInput, Form } from 'shards-react'
 
 export default function ChannelInfo({ channelId }) {
   let channel = useDoc(`channels/${channelId}`)
@@ -22,43 +23,41 @@ export default function ChannelInfo({ channelId }) {
     onTopicChange(e.target.value)
   }
 
-  const onEnter = e => {
-    if (e.key === 'Enter') {
-      handleSubmit(e)
-    }
-  }
-
   return (
-    <div className="d-flex justify-content-between align-items-center">
-      <div className="d-flex align-items-center">
-        <div
-          className="d-flex align-items-center"
-          onClick={() => toggleInput(true)}>
-          <p className="p-0 m-0 mr-2 font-weight-bold">Topic:</p>
-          <p>{!inputActive && renderTopic()}</p>
-        </div>
-        {inputActive && (
-          <>
-            <input
-              type="text"
-              onChange={handleChange}
-              className="p-0 m-0 ml-2"
-              defaultValue={channel && channel.topic}
-              onKeyPress={onEnter}
-            />
-            <Icon className="ml-2" name="send" onClick={handleSubmit} />
-          </>
+    <>
+      <div className="d-flex justify-content-between mt-5">
+        <h5 className="py-0 my-0 mr-2 font-weight-bold">Topic:</h5>
+        <h5 className="py-0 my-0 text-center">
+          {!inputActive && renderTopic()}
+        </h5>
+        {!inputActive && (
+          <FaRegEdit size="1.5rem" onClick={() => toggleInput(true)} />
         )}
       </div>
-      <div>
-        <p className="font-weight-bold">#{channel && channel.id}</p>
-      </div>
-    </div>
+      {inputActive && (
+        <div className="d-flex align-items-center w-100">
+          <Form onSubmit={handleSubmit} className="w-100">
+            <FormInput
+              size="md"
+              onChange={handleChange}
+              className="w-100"
+              defaultValue={channel && channel.topic}
+            />
+          </Form>
+          <FaRegPaperPlane
+            className="ml-3"
+            size="1.5rem"
+            onClick={handleSubmit}
+          />
+        </div>
+      )}
+    </>
   )
+
   function renderTopic() {
     const noTopic = channel && channel.topic.length === 0
     if (noTopic) {
-      return 'Click me to add the topic :)'
+      return `No topic. . .  `
     }
     return channel && channel.topic
   }
