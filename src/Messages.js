@@ -1,19 +1,23 @@
-import React, { useRef } from 'react'
+import React, { useRef, useEffect } from 'react'
 import useCollection from './useCollection'
 import useDocWithCashe from './useDocWithCashe'
 import distanceInWords from 'date-fns/distance_in_words'
 import isSameDay from 'date-fns/is_same_day'
-import { useEffect } from 'react'
 import { Alert, Button, Card, CardBody } from 'shards-react'
+
+function useChatScroll(ref) {
+  useEffect(() => {
+    const node = ref.current
+    node.scrollTop = ref.scrollHeight
+  })
+}
 
 export default function Messages({ channelId }) {
   const messages = useCollection(`channels/${channelId}/messages`, 'createdAt')
-  const scrollerRef = useRef()
 
-  useEffect(() => {
-    const node = scrollerRef.current
-    node.scrollTop = node.scrollHeight
-  })
+  const scrollerRef = useRef()
+  useChatScroll(scrollerRef)
+
   // console.log(window.innerHeight)
   return (
     <div ref={scrollerRef} style={{ height: '70vh', overflowY: 'scroll' }}>

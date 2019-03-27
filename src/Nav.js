@@ -5,8 +5,10 @@ import { Link } from '@reach/router'
 import { Alert, Button, Card, CardBody } from 'shards-react'
 import { Location } from '@reach/router'
 
-export default function Nav({ user }) {
+export default function Nav({ user, location }) {
   const channels = useCollection('channels')
+  const { pathname } = location
+  // console.log(location)
   // const [pathname, setPathname] = useState(window.location.pathname)
 
   // useEffect(() => {
@@ -34,30 +36,26 @@ export default function Nav({ user }) {
         </div>
       </div>
 
-      <ChannelList channels={channels} />
+      <ChannelList channels={channels} pathname={pathname} />
     </>
   )
 }
 
-function ChannelList({ channels }) {
+function ChannelList({ channels, pathname }) {
   return (
     <div className="mt-5">
-      {channels.map(({ id }) => (
-        <Location key={id}>
-          {({ location }) => {
-            return (
-              <Link to={`/channel/${id}`}>
-                <h5
-                  className={`my-3 ${
-                    location.pathname.includes(id) ? 'font-weight-bold' : ''
-                  }`}>
-                  #{id}
-                </h5>
-              </Link>
-            )
-          }}
-        </Location>
-      ))}
+      {channels.map(({ id }) => {
+        return (
+          <Link to={`/channel/${id}`} key={id} className="my-5">
+            <h5
+              className={`my-3 ${
+                pathname.includes(id) ? 'font-weight-bold' : ''
+              }`}>
+              #{id}
+            </h5>
+          </Link>
+        )
+      })}
     </div>
   )
 }

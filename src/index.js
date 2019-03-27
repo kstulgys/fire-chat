@@ -19,9 +19,9 @@ function App() {
         height: '100vh'
       }}>
       <div className="row h-100">
-        <div className="col-3">
-          <Nav user={user} />
-        </div>
+        <Router className="col-3">
+          <Nav path="/*" user={user} />
+        </Router>
         <Router className="col-9">
           <Channel path="channel/:channelId" user={user} />
           <Redirect from="/" to="channel/general" />

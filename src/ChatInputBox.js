@@ -17,19 +17,16 @@ export default function ChatInputBox({ user, channelId }) {
   }
 
   return (
-    <Card
-      className="m-0 p-0"
-      style={{ position: 'absolute', bottom: 30, right: 0, width: '100%' }}>
-      <CardBody className="m-0 p-0">
-        <Form onSubmit={handleSubmit}>
-          <FormInput
-            size="lg"
-            value={input}
-            onChange={e => setInput(e.target.value)}
-            placeholder=""
-          />
-        </Form>
-      </CardBody>
-    </Card>
+    <Form
+      onSubmit={handleSubmit}
+      style={{ position: 'absolute', bottom: 30, left: 0, width: '100%' }}>
+      <FormInput
+        className="w-100"
+        size="lg"
+        value={input}
+        onChange={e => setInput(e.target.value)}
+        placeholder=""
+      />
+    </Form>
   )
 }
